@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 
+
 class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
 
     
@@ -31,11 +32,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         configureUI(.notRecording)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        
-    }
-    
-    // MARK: Recoding audio action
+     // MARK: Recoding audio action
 
     
     @IBAction func recordAudio(_ sender: Any) {
@@ -71,10 +68,17 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        
         if flag {
             performSegue(withIdentifier: "stopRecording", sender: audioRecorder.url)
+        } else { //some problem occured
+            let alert = UIAlertController(title: "Error", message: "An error ocurred when recording the audio. Please try again.", preferredStyle: .alert)
             
-        }
+            alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                print("OK")
+            })
+            present(alert, animated: true)
+        }        
     }
     
     
